@@ -33,10 +33,24 @@ const typeDefs = gql`
     }
 
     type Query {
+        me: User
         users: [User]
         user(username: String!): User
         thoughts(username: String): [Thought]
         thought(_id: ID!): Thought
+    }
+
+    type Mutation {
+        login(email: String!, password: String!): Auth
+        addUser(username: String!, email: String!, password: String!): Auth
+        addThought(thoughtText: String!): Thought
+        addReaction(thoughtId: ID!, reactionBody: String!): Thought
+        addFriend(friendId: ID!): User
+    }
+
+    type Auth {
+        token: ID!
+        user: User
     }
 `;
 //(usernameL String) defined thoughts so that it could recieve a parameter if we wanted 
@@ -45,6 +59,8 @@ const typeDefs = gql`
 // the ! excalmmation point indicates that for a query to be carried out the data must exist 
 
 //when we run a thought query we can also list the reactions field to get back an array of reaction data for each though 
+
+// Mutation queries modify data in the data store and returns a value. It can be used to insert, update, or delete data. Mutations are defined as a part of the schema.
 
 //export typeDefs
 module.exports = typeDefs;
